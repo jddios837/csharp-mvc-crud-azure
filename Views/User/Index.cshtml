@@ -1,0 +1,26 @@
+@model IEnumerable<frontend_csharp.Models.UserData>
+
+<h2 class="text-center">Lista de Usuarios</h2>
+
+<table class="table table-striped">
+  <tr>
+    <th>Nombre</th>
+    <th>Email</th>
+    <th>Opciones</th>
+  </tr>
+  @foreach (var item in Model)
+  {
+      <tr>
+        <td>
+          @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+          <button type="button" class="btn btn-success">Editar</button>
+          <button type="button" class="btn btn-danger">Eliminar</button>
+        </td>
+      </tr>
+  }
+</table>
