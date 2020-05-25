@@ -29,7 +29,7 @@
 <br>
 
 <form asp-action="@valueAction" asp-route-id="@Model.Product.Id" method="POST">
-  
+  @Html.HiddenFor(model => @Model.Product.Id)
   <div class="form-group">
     <label for="Name">Nombre</label>
     @Html.TextBoxFor(model => @Model.Product.Name, new { @class = "form-control", @placeholder="Nombre", @type="text" })

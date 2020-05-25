@@ -115,6 +115,23 @@ namespace frontend_csharp.Controllers
             return View(myModel);
         }
 
+        public async  Task<IActionResult> Update(ProductData product)
+        {
+            HttpClient client = _api.Initial();
+            string json = JsonConvert.SerializeObject(product);
+            StringContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+            HttpResponseMessage res = await client.PutAsync("api/products/" + product.Id, content);
+
+
+            if (res.IsSuccessStatusCode)
+            {   
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("Edit", new { id = product.Id});
+        }
+
         public async Task<IActionResult> Delete(int? id)
         {
             HttpClient client = _api.Initial();
