@@ -1,9 +1,22 @@
 @model frontend_csharp.Models.UserData
 @{
     string valueAction = this.ViewData.ContainsKey("action") ? this.ViewData["action"].ToString() : string.Empty;
+    string valueButton = this.ViewData.ContainsKey("button") ? this.ViewData["button"].ToString() : string.Empty;
 }
 
-<form asp-action="@valueAction" asp-route-id="@Model.Id" method="get">
+<div class="row">
+  <div class="col">
+    <a class="btn btn-success" 
+              asp-action="Index" 
+              asp-controller="User">
+      Volver
+    </a>
+  </div>
+</div>
+
+<br>
+
+<form asp-action="@valueAction" asp-route-id="@Model.Id" method="POST">
   
   <div class="form-group">
     <label for="Name">Nombre</label>
@@ -16,5 +29,5 @@
   </div>
 
 
-  <button type="submit" class="btn btn-primary">Guardar</button>
+  <button type="submit" class="btn btn-primary">@valueButton</button>
 </form>

@@ -1,0 +1,55 @@
+@model frontend_csharp.Models.ProductUsersViewModel
+@{
+    string valueAction = this.ViewData.ContainsKey("action") ? this.ViewData["action"].ToString() : string.Empty;
+    string valueButton = this.ViewData.ContainsKey("button") ? this.ViewData["button"].ToString() : string.Empty;
+
+    List<SelectListItem> listItems= new List<SelectListItem>();
+
+    foreach (UserData item in Model.Users)
+    {
+        listItems.Add(new SelectListItem
+        {
+          Text = item.Name,
+          Value = item.Id.ToString()
+        });
+    }  
+    
+}
+
+<div class="row">
+  <div class="col">
+    <a class="btn btn-success" 
+              asp-action="Index" 
+              asp-controller="Product">
+      Volver
+    </a>
+  </div>
+</div>
+
+<br>
+
+<form asp-action="@valueAction" asp-route-id="@Model.Product.Id" method="POST">
+  
+  <div class="form-group">
+    <label for="Name">Nombre</label>
+    @Html.TextBoxFor(model => @Model.Product.Name, new { @class = "form-control", @placeholder="Nombre", @type="text" })
+  </div>
+
+  <div class="form-group">
+    <label for="Description">Descripci&oacute;n</label>
+    @Html.TextBoxFor(model => @Model.Product.Description, new { @class = "form-control", @placeholder="Descripción", @type="text" })
+    @Html.HiddenFor(model => @Model.Product.Image, new { @value="" })
+  </div>
+
+  <div class="form-group">
+    <label for="Price">Precio</label>
+        @Html.TextBoxFor(model => @Model.Product.Price, new { @class = "form-control", @placeholder="Descripción", @type="number" })
+  </div>
+
+  <div class="form-group">
+      <label for="UserId">Usuario</label>
+      @Html.DropDownListFor(model => Model.Product.UserId, listItems, "-- Selecciona --", new { @class = "form-control" })
+  </div>  
+
+  <button type="submit" class="btn btn-primary">@valueButton</button>
+</form>

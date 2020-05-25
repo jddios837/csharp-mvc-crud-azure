@@ -1,0 +1,6 @@
+@model frontend_csharp.Models.ProductUsersViewModel
+
+<h2 class="text-center">Nuevo Producto</h2>
+
+
+@await Html.PartialAsync("_FormProduct", Model, new ViewDataDictionary(this.Vi‌​ewData) {{"action", "Create"}, {"button", "Guardar"}})

@@ -1,5 +1,61 @@
+@model IEnumerable<frontend_csharp.Models.ProductData>
+
 @{
   ViewData["Title"] = "Productos";
 }
 
-<p>Lista de Productos</p>
+<h2 class="text-center">Lista de Productos</h2>
+
+<div class="row">
+  <div class="col">
+    <a class="btn btn-success" 
+              asp-action="New" 
+              asp-controller="Product">
+      Nuevo Producto
+    </a>
+  </div>
+</div>
+
+<br>
+
+<table class="table table-striped">
+  <tr>
+    <th>Nombre</th>
+    <th>Descripci&oacute;n</th>
+    <th>Opciones</th>
+  </tr>
+  @foreach (var item in Model)
+  {
+      <tr>
+        <td>
+          @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+          
+          @* <button type="button" class="btn btn-success" asp>Editar</button> *@
+          <form 
+            asp-action="Delete" 
+            asp-controller="Product" 
+            asp-route-id="@item.Id" 
+            method="POST">
+
+            <a class="btn btn-success" 
+                asp-action="Edit" 
+                asp-controller="Product"
+                asp-route-id="@item.Id">
+              Editar
+            </a>
+
+            <button type="submit" class="btn btn-danger"
+                    onclick="return confirm('¿Deseas eliminar a este product? @item.Name')">
+              Eliminar
+            </button>
+          </form>
+          
+        </td>
+      </tr>
+  }
+</table>
