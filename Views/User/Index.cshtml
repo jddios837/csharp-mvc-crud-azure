@@ -2,6 +2,18 @@
 
 <h2 class="text-center">Lista de Usuarios</h2>
 
+<div class="row">
+  <div class="col">
+    <a class="btn btn-success" 
+              asp-action="New" 
+              asp-controller="User">
+      Nuevo Usuario
+    </a>
+  </div>
+</div>
+
+<br>
+
 <table class="table table-striped">
   <tr>
     <th>Nombre</th>
@@ -18,8 +30,19 @@
           @Html.DisplayFor(modelItem => item.Email)
         </td>
         <td>
-          <button type="button" class="btn btn-success">Editar</button>
-          <button type="button" class="btn btn-danger">Eliminar</button>
+          
+          @* <button type="button" class="btn btn-success" asp>Editar</button> *@
+          <form asp-action="Delete" asp-route-id="@item.Id" method="POST">
+            <a class="btn btn-success" 
+                asp-action="Edit" 
+                asp-controller="User"
+                asp-route-id="@item.Id">
+              Editar
+            </a>
+            <button type="submit" class="btn btn-danger"
+                    onclick="return confirm('¿Deseas eliminar a este usuario? @item.Name')">Eliminar</button>
+          </form>
+          
         </td>
       </tr>
   }

@@ -10,6 +10,7 @@ using frontend_csharp.Models;
 using frontend_csharp.Helper;
 using System.Net.Http;
 
+
 using Newtonsoft.Json;
 
 namespace frontend_csharp.Controllers
@@ -40,6 +41,70 @@ namespace frontend_csharp.Controllers
             
             return View(model);
         }
-        
+
+        public IActionResult New()
+        {
+            UserData model = new UserData();
+
+            return View(model);
+        }
+
+        public async  Task<IActionResult> Create(UserData user)
+        {
+            HttpClient client = _api.Initial();
+            string json = JsonConvert.SerializeObject(user);
+            StringContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+            HttpResponseMessage res = await client.PostAsync("api/users/", content);
+
+
+            if (res.IsSuccessStatusCode)
+            {   
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("New", new { id = user.Id});
+        }
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            UserData model = new UserData();
+            HttpClient client = _api.Initial();
+
+            HttpResponseMessage res = await client.GetAsync("api/users/" + id);
+
+            if(res.IsSuccessStatusCode)
+            {
+                var results = res.Content.ReadAsStringAsync().Result;
+                model = JsonConvert.DeserializeObject<UserData>(results);
+            }
+
+            return View(model);
+        }
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            HttpClient client = _api.Initial();
+            HttpResponseMessage res = await client.DeleteAsync("api/users/" + id);
+
+            return RedirectToAction("Index");
+        }
+
+        public async  Task<IActionResult> Update(UserData user)
+        {
+            HttpClient client = _api.Initial();
+            string json = JsonConvert.SerializeObject(user);
+            StringContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+            HttpResponseMessage res = await client.PutAsync("api/users/" + user.Id, content);
+
+
+            if (res.IsSuccessStatusCode)
+            {   
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("Edit", new { id = user.Id});
+        }
     }
 }

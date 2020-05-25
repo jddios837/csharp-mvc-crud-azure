@@ -21,6 +21,11 @@ namespace frontend_csharp
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    // change url 
+                    webBuilder.UseUrls(
+                        "http://localhost:5002",
+                        "https://localhost:5003"
+                    );
                 });
     }
 }
