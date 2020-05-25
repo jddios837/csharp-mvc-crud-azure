@@ -95,10 +95,6 @@ namespace frontend_csharp.Controllers
                 var results = res.Content.ReadAsStringAsync().Result;
                 model = JsonConvert.DeserializeObject<ProductData>(results);
 
-                // get user list
-                
-                // HttpClient client = _api.Initial();
-
                 HttpResponseMessage resList = await client.GetAsync("api/users");
 
                 if(resList.IsSuccessStatusCode)

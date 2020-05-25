@@ -18,6 +18,7 @@ namespace frontend_csharp.Controllers
             _logger = logger;
         }
 
+        
         public IActionResult Index()
         {
             return View();
